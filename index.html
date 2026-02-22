@@ -3,209 +3,361 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scholar OS | IITGN Command Center</title>
+    <title>Scholar OS | Enterprise Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* Custom Animations & Glassmorphism */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
         
+        :root {
+            --bg-dark: #070B19;
+            --panel-bg: rgba(15, 23, 42, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --accent-cyan: #06b6d4;
+            --accent-purple: #8b5cf6;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(6, 182, 212, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
+            background-attachment: fixed;
             color: #f8fafc;
             min-height: 100vh;
+            overflow-x: hidden;
         }
+
         .font-code { font-family: 'JetBrains Mono', monospace; }
         
         .glass-panel {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            background: var(--panel-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        
-        .glow-text { text-shadow: 0 0 20px rgba(96, 165, 250, 0.5); }
-        .pulse-border { animation: pulse-border 2s infinite; }
-        
-        @keyframes pulse-border {
-            0% { border-color: rgba(56, 189, 248, 0.2); box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.1); }
-            50% { border-color: rgba(56, 189, 248, 0.5); box-shadow: 0 0 15px 0 rgba(56, 189, 248, 0.2); }
-            100% { border-color: rgba(56, 189, 248, 0.2); box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
+
+        .glass-panel:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 25px 50px -12px rgba(6, 182, 212, 0.1);
         }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-cyan); }
+
+        /* Modal Animations */
+        .modal-overlay {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            transform: scale(0.95) translateY(20px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .modal-overlay.active .modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        /* Glowing text effects */
+        .text-glow-cyan { text-shadow: 0 0 15px rgba(6, 182, 212, 0.6); }
     </style>
-    <script>
-        // --- DATA ENGINE (Same robust backend, upgraded frontend injection) ---
-        const menuDB = {
-            0: { day: "Sunday", breakfast: "Poha/Sprouts, Bread Jam", lunch: "Baingan Bharta, Dal Panchratni", snacks: "Maggie/Pasta", dinner: "Pulao, Gulab Jamun" },
-            1: { day: "Monday", breakfast: "Veg Cutlet, Sprouts", lunch: "Tadka Dal, Maths Veg", snacks: "Maska Bun", dinner: "Malai Kofta, Pulao" },
-            2: { day: "Tuesday", breakfast: "Aloo Onion Paratha", lunch: "Lauki Chana Dal", snacks: "Corn Chaat", dinner: "Khichdi Paneer" },
-            3: { day: "Wednesday", breakfast: "Uttapam, Sambar", lunch: "Arhar Dal, Soya Chunk", snacks: "Papdi Chaat", dinner: "Gobi Matar" },
-            4: { day: "Thursday", breakfast: "Poha, Sprouts", lunch: "Paneer Matar", snacks: "Aloo Tikki Burger", dinner: "Amritsari Dal" },
-            5: { day: "Friday", breakfast: "Dosa, Sambar", lunch: "Aloo Palak", snacks: "Dabeli", dinner: "Rajsthani Dal" },
-            6: { day: "Saturday", breakfast: "Idli, Sambar", lunch: "Aloo Sabzi", snacks: "Veg Sandwich", dinner: "Rajsthani Kadi" }
-        };
-
-        const busDB = [
-            { route: "IITGN Mess to Kudasan", timeStr: "07:00", type: "outbound" },
-            { route: "EECO Shuttle (JEET)", timeStr: "07:50", type: "internal" },
-            { route: "JEET to Mess (29-St)", timeStr: "08:20", type: "internal" },
-            { route: "IITGN Mess to Kudasan", timeStr: "08:30", type: "outbound" },
-            { route: "IITGN Mess to Kudasan", timeStr: "16:30", type: "outbound" },
-            { route: "IITGN Mess to Kudasan", timeStr: "17:45", type: "outbound" },
-            { route: "JEET to Mess (29-St)", timeStr: "18:00", type: "internal" },
-            { route: "IITGN Mess to Kudasan", timeStr: "21:30", type: "outbound" }
-        ];
-
-        function format12Hour(timeStr) {
-            let [h, m] = timeStr.split(':');
-            h = parseInt(h);
-            let ampm = h >= 12 ? 'PM' : 'AM';
-            h = h % 12 || 12; 
-            return `${h}:${m} ${ampm}`;
-        }
-
-        function updateOS() {
-            const now = new Date();
-            
-            // 1. Core Clock
-            document.getElementById('sys-time').innerText = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
-            document.getElementById('sys-date').innerText = now.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' }).toUpperCase();
-
-            // 2. Meal Matrix
-            let hour = now.getHours();
-            let today = menuDB[now.getDay()];
-            let mealName = "AWAITING DATA";
-            let mealContent = "";
-
-            if (hour < 10) { mealName = "BREAKFAST"; mealContent = today.breakfast; } 
-            else if (hour < 15) { mealName = "LUNCH"; mealContent = today.lunch; } 
-            else if (hour < 18) { mealName = "SNACKS"; mealContent = today.snacks; } 
-            else if (hour < 22) { mealName = "DINNER"; mealContent = today.dinner; } 
-            else { mealName = "TOMORROW'S BREAKFAST"; mealContent = menuDB[(now.getDay() + 1) % 7].breakfast; }
-
-            document.getElementById('meal-type').innerText = mealName;
-            document.getElementById('meal-items').innerText = mealContent;
-
-            // 3. Transit Radar
-            let currentMins = (hour * 60) + now.getMinutes();
-            let nextBuses = busDB.filter(b => {
-                let [h, m] = b.timeStr.split(':');
-                return ((parseInt(h) * 60) + parseInt(m)) >= currentMins;
-            }).slice(0, 3);
-
-            let busHTML = '';
-            nextBuses.forEach((bus, i) => {
-                let delay = i * 100;
-                busHTML += `
-                <div class="flex justify-between items-center p-3 mb-2 rounded bg-white/5 hover:bg-white/10 transition duration-300 border border-white/5" style="animation: fadeIn 0.5s ease-out ${delay}ms both;">
-                    <div class="flex items-center gap-3">
-                        <i class="fas ${bus.type === 'internal' ? 'fa-shuttle-van text-green-400' : 'fa-bus text-blue-400'}"></i>
-                        <span class="font-semibold text-sm tracking-wide">${bus.route}</span>
-                    </div>
-                    <span class="font-code text-sm text-cyan-300 bg-cyan-900/30 px-2 py-1 rounded">${format12Hour(bus.timeStr)}</span>
-                </div>`;
-            });
-            document.getElementById('transit-radar').innerHTML = busHTML || '<div class="text-gray-500 text-sm p-2">NO FURTHER DEPARTURES TODAY</div>';
-        }
-
-        window.onload = function() {
-            updateOS();
-            setInterval(updateOS, 1000);
-        }
-    </script>
 </head>
 <body class="p-4 md:p-8">
 
-    <header class="flex flex-col md:flex-row justify-between items-center mb-10 pb-4 border-b border-white/10 gap-4">
-        <div class="flex items-center gap-4">
-            <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-[0_0_15px_rgba(6,182,212,0.5)]">
-                <i class="fas fa-satellite-dish text-2xl text-white"></i>
+    <div id="bus-modal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+        <div class="modal-content glass-panel w-full max-w-4xl max-h-[85vh] flex flex-col overflow-hidden border-t-4 border-t-cyan-500">
+            <div class="p-6 border-b border-white/10 flex justify-between items-center bg-white/5">
+                <h2 class="text-2xl font-bold tracking-widest"><i class="fas fa-bus text-cyan-400 mr-3"></i>COMPLETE TRANSIT DATABASE</h2>
+                <button onclick="UI_STATE.closeModals()" class="text-gray-400 hover:text-white hover:bg-white/10 p-2 rounded-full transition">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto flex-1 font-code text-sm" id="full-bus-schedule-container">
+                </div>
+        </div>
+    </div>
+
+    <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6 relative z-10">
+        <div class="flex items-center gap-5">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center shadow-[0_0_30px_rgba(6,182,212,0.4)] relative overflow-hidden">
+                <div class="absolute inset-0 bg-black/20"></div>
+                <i class="fas fa-layer-group text-3xl text-white relative z-10"></i>
             </div>
             <div>
-                <h1 class="text-3xl font-bold tracking-widest glow-text">SCHOLAR<span class="text-cyan-400">OS</span></h1>
-                <p class="text-xs tracking-[0.2em] text-cyan-200/60 uppercase">System Active • IIT Gandhinagar</p>
+                <h1 class="text-4xl font-extrabold tracking-widest text-glow-cyan">SCHOLAR<span class="text-cyan-400 font-light">OS</span></h1>
+                <p class="text-sm tracking-[0.2em] text-cyan-200/80 uppercase mt-1 italic border-l-2 border-cyan-500 pl-3">"Architecting the Scholar's Time and Mind"</p>
+                <p class="text-xs text-gray-500 mt-2 font-code">System Active | Location: IIT Gandhinagar | Env: Production</p>
             </div>
         </div>
-        <div class="text-right glass-panel px-6 py-3 rounded-xl border-t border-l border-white/20">
-            <div id="sys-time" class="font-code text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-500">00:00:00</div>
-            <div id="sys-date" class="text-xs tracking-widest text-gray-400 mt-1">LOADING...</div>
+        
+        <div class="text-right glass-panel px-8 py-4 bg-gradient-to-r from-white/5 to-transparent">
+            <div id="sys-time" class="font-code text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-400 tracking-wider">00:00:00</div>
+            <div id="sys-date" class="text-sm tracking-[0.1em] text-gray-400 mt-2 uppercase font-semibold">LOADING...</div>
         </div>
     </header>
 
-    <main class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-        <div class="lg:col-span-2 space-y-6">
+    <main class="grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10">
+        
+        <div class="lg:col-span-4 space-y-8">
             
-            <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl -mr-10 -mt-10 transition-transform group-hover:scale-150"></div>
-                <div class="flex justify-between items-end mb-6">
-                    <div>
-                        <h2 class="text-xs font-bold tracking-[0.2em] text-gray-400 mb-1"><i class="fas fa-microscope mr-2"></i>RESEARCH TIMELINE</h2>
-                        <h3 class="text-xl font-semibold">Doctoral Progress</h3>
-                    </div>
-                    <span class="text-xs font-code bg-purple-500/20 text-purple-300 px-3 py-1 rounded-full border border-purple-500/30">Start: 17 JUL 2024</span>
-                </div>
-                
-                <div class="w-full bg-gray-800/50 rounded-full h-2 mb-4 overflow-hidden border border-white/5">
-                    <div class="bg-gradient-to-r from-purple-500 to-cyan-400 h-2 rounded-full relative" style="width: 15%">
-                        <div class="absolute right-0 top-0 bottom-0 w-2 bg-white rounded-full animate-ping"></div>
-                    </div>
-                </div>
-                
-                <div class="grid grid-cols-2 gap-4 mt-6">
-                    <div class="bg-black/20 p-4 rounded-xl border border-white/5 hover:border-white/20 transition">
-                        <p class="text-xs text-gray-500 mb-1">UPCOMING MILESTONE</p>
-                        <p class="font-semibold text-purple-300">PMRF 2026 Application</p>
-                        <p class="text-xs font-code mt-2 text-gray-400">Status: <span class="text-yellow-400">Drafting</span></p>
-                    </div>
-                    <div class="bg-black/20 p-4 rounded-xl border border-white/5 hover:border-white/20 transition pulse-border">
-                        <p class="text-xs text-gray-500 mb-1">COMPUTE STATUS</p>
-                        <p class="font-semibold text-cyan-300">Earth Engine Script</p>
-                        <p class="text-xs font-code mt-2 text-gray-400">Tasks: <span class="text-green-400">Idle</span></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="glass-panel rounded-2xl p-6 border-l-4 border-l-orange-500">
-                <h2 class="text-xs font-bold tracking-[0.2em] text-gray-400 mb-4"><i class="fas fa-utensils mr-2"></i>NUTRITION MATRIX</h2>
-                <div class="flex items-center gap-6">
-                    <div class="w-16 h-16 rounded-full border-4 border-orange-500/30 flex items-center justify-center relative">
-                        <div class="absolute inset-0 rounded-full border-4 border-orange-500 border-t-transparent animate-spin" style="animation-duration: 3s;"></div>
-                        <i class="fas fa-fire text-orange-400"></i>
-                    </div>
-                    <div>
-                        <p id="meal-type" class="text-orange-400 font-bold tracking-wider text-sm mb-1">LOADING...</p>
-                        <p id="meal-items" class="text-lg text-gray-200">Syncing mess data...</p>
-                        <p class="text-xs text-gray-500 mt-2 font-code">LOCATIONS: Mohan • Jaiswal • Aqaura • Bhopal</p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="space-y-6">
-            
-            <div class="glass-panel rounded-2xl p-6 h-full border-t border-white/10">
+            <div class="glass-panel p-6">
                 <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-xs font-bold tracking-[0.2em] text-gray-400"><i class="fas fa-route mr-2"></i>TRANSIT RADAR</h2>
-                    <span class="flex h-3 w-3 relative">
-                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                      <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                    <div>
+                        <h2 class="text-xs font-bold tracking-[0.2em] text-gray-400 mb-1">LIVE TELEMETRY</h2>
+                        <h3 class="text-xl font-semibold">Transit Radar</h3>
+                    </div>
+                    <span class="relative flex h-3 w-3">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
                     </span>
                 </div>
                 
-                <div id="transit-radar" class="space-y-1">
+                <div id="transit-radar" class="space-y-3 mb-6">
                     </div>
 
-                <button class="w-full mt-6 bg-cyan-600/20 hover:bg-cyan-600/40 text-cyan-300 text-xs font-bold py-3 rounded border border-cyan-500/30 transition duration-300 tracking-wider">
-                    VIEW FULL SCHEDULE
+                <button onclick="UI_STATE.openModal('bus-modal')" class="w-full group bg-transparent hover:bg-cyan-500/10 text-cyan-400 text-xs font-bold py-4 rounded-xl border border-cyan-500/30 transition duration-300 tracking-[0.1em] flex justify-center items-center gap-2">
+                    <span>VIEW COMPLETE SCHEDULE MASTER</span>
+                    <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition"></i>
                 </button>
             </div>
 
+            <div class="glass-panel p-6 relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-orange-500/10 rounded-full blur-3xl"></div>
+                <h2 class="text-xs font-bold tracking-[0.2em] text-gray-400 mb-6 border-b border-white/10 pb-3">NUTRITION MATRIX</h2>
+                
+                <div class="mb-4">
+                    <span class="text-xs font-code bg-orange-500/20 text-orange-300 px-3 py-1 rounded border border-orange-500/30 mb-3 inline-block" id="meal-type">LOADING</span>
+                    <p id="meal-items" class="text-xl text-gray-100 font-light leading-relaxed">Parsing mess data arrays...</p>
+                </div>
+                <p class="text-xs text-gray-500 font-code mt-4">Valid: Mohan, Jaiswal, Aqaura, Bhopal</p>
+            </div>
+        </div>
+
+        <div class="lg:col-span-8 space-y-8">
+            
+            <div class="glass-panel p-8 h-full border-t border-purple-500/30">
+                <div class="flex justify-between items-end mb-10 border-b border-white/10 pb-6">
+                    <div>
+                        <h2 class="text-sm font-bold tracking-[0.2em] text-purple-400 mb-2"><i class="fas fa-microchip mr-2"></i>THE RESEARCH CORE</h2>
+                        <p class="text-gray-400 text-sm">Doctoral execution timeline and remote compute tasks.</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xs font-code text-gray-500">INIT: 17 JUL 2024</p>
+                        <p class="text-xs font-code text-cyan-400 mt-1">UPTIME: 585 DAYS</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                    <div class="bg-black/30 p-5 rounded-xl border border-white/5 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
+                        <h4 class="text-xs tracking-[0.1em] text-gray-500 mb-3">ACTIVE FELLOWSHIP TRACK</h4>
+                        <p class="text-lg font-semibold text-white">PMRF 2026 Application</p>
+                        <div class="mt-4 flex justify-between text-xs font-code text-gray-400">
+                            <span>Status: Formulation</span>
+                            <span class="text-yellow-400"><i class="fas fa-spinner fa-spin mr-1"></i> In Progress</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-black/30 p-5 rounded-xl border border-white/5 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-green-500"></div>
+                        <h4 class="text-xs tracking-[0.1em] text-gray-500 mb-3">COMPUTE ENGINE API (MOCK)</h4>
+                        <p class="text-lg font-semibold text-white">Google Earth Engine Process</p>
+                        <div class="mt-4 flex justify-between text-xs font-code text-gray-400">
+                            <span>Sentinel-2 MNDWI Script</span>
+                            <span class="text-green-400"><i class="fas fa-check-circle mr-1"></i> Awaiting Push</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
+    <script>
+        // DATA LAYER
+        const DATABASE = {
+            motto: "Architecting the Scholar's Time and Mind",
+            menus: {
+                0: { day: "Sunday", breakfast: "Poha/Sprouts, Bread Jam", lunch: "Baingan Bharta, Dal Panchratni", snacks: "Maggie/Pasta", dinner: "Pulao, Gulab Jamun" },
+                1: { day: "Monday", breakfast: "Veg Cutlet, Sprouts", lunch: "Tadka Dal, Maths Veg", snacks: "Maska Bun", dinner: "Malai Kofta, Pulao" },
+                2: { day: "Tuesday", breakfast: "Aloo Onion Paratha", lunch: "Lauki Chana Dal", snacks: "Corn Chaat", dinner: "Khichdi Paneer" },
+                3: { day: "Wednesday", breakfast: "Uttapam, Sambar", lunch: "Arhar Dal, Soya Chunk", snacks: "Papdi Chaat", dinner: "Gobi Matar" },
+                4: { day: "Thursday", breakfast: "Poha, Sprouts", lunch: "Paneer Matar", snacks: "Aloo Tikki Burger", dinner: "Amritsari Dal" },
+                5: { day: "Friday", breakfast: "Dosa, Sambar", lunch: "Aloo Palak", snacks: "Dabeli", dinner: "Rajsthani Dal" },
+                6: { day: "Saturday", breakfast: "Idli, Sambar", lunch: "Aloo Sabzi", snacks: "Veg Sandwich", dinner: "Rajsthani Kadi" }
+            },
+            buses: [
+                // Comprehensive 56-Seater (Mess Parking -> Kudasan via Rakshashakti)
+                { route: "56-St: Mess -> Kudasan", time: "07:00", type: "outbound" },
+                { route: "56-St: Kudasan -> Mess", time: "07:30", type: "inbound" },
+                { route: "56-St: Mess -> Kudasan", time: "08:30", type: "outbound" },
+                { route: "56-St: Kudasan -> Mess", time: "09:00", type: "inbound" },
+                { route: "56-St: Mess -> Kudasan", time: "09:30", type: "outbound" },
+                { route: "56-St: Kudasan -> Mess", time: "10:00", type: "inbound" },
+                { route: "56-St: Mess -> Kudasan", time: "16:30", type: "outbound" },
+                { route: "56-St: Kudasan -> Mess", time: "17:00", type: "inbound" },
+                { route: "56-St: Mess -> Kudasan", time: "17:45", type: "outbound" },
+                { route: "56-St: Kudasan -> Mess", time: "18:15", type: "inbound" },
+                { route: "56-St: Mess -> Kudasan", time: "18:45", type: "outbound" },
+                { route: "56-St: Kudasan -> Mess", time: "19:15", type: "inbound" },
+                { route: "56-St: Mess -> Kudasan", time: "19:45", type: "outbound" },
+                { route: "56-St: Kudasan -> Mess", time: "20:15", type: "inbound" },
+                { route: "56-St: Mess -> Kudasan", time: "21:30", type: "outbound" },
+                { route: "56-St: Kudasan -> Mess", time: "22:30", type: "inbound" },
+                
+                // Comprehensive 29-Seater (JEET -> Mess)
+                { route: "29-St: JEET -> Mess", time: "08:20", type: "internal" },
+                { route: "29-St: Mess -> JEET", time: "08:40", type: "internal" },
+                { route: "29-St: JEET -> Mess", time: "09:00", type: "internal" },
+                { route: "29-St: Mess -> JEET", time: "09:20", type: "internal" },
+                { route: "29-St: JEET -> Mess", time: "09:40", type: "internal" },
+                { route: "29-St: Mess -> JEET", time: "10:00", type: "internal" },
+                { route: "29-St: JEET -> Mess", time: "10:20", type: "internal" },
+                { route: "29-St: JEET -> Mess", time: "13:00", type: "internal" },
+                { route: "29-St: Mess -> JEET", time: "13:20", type: "internal" },
+                { route: "29-St: JEET -> Mess", time: "13:40", type: "internal" },
+                { route: "29-St: Mess -> JEET", time: "14:00", type: "internal" },
+                { route: "29-St: JEET -> Mess", time: "14:20", type: "internal" },
+                { route: "29-St: JEET -> Mess", time: "15:30", type: "internal" },
+                { route: "29-St: Mess -> Mess(Loop)", time: "17:00", type: "internal" },
+                { route: "29-St: JEET -> JEET(Loop)", time: "17:20", type: "internal" },
+                { route: "29-St: Mess -> Mess(Loop)", time: "17:40", type: "internal" },
+                { route: "29-St: JEET -> JEET(Loop)", time: "18:00", type: "internal" },
+                { route: "29-St: Mess -> Mess(Loop)", time: "18:20", type: "internal" },
+                { route: "29-St: JEET -> JEET(Loop)", time: "18:40", type: "internal" },
+                { route: "29-St: Mess -> Mess(Loop)", time: "19:00", type: "internal" },
+                { route: "29-St: JEET -> JEET(Loop)", time: "19:20", type: "internal" },
+                { route: "29-St: Mess -> Mess(Loop)", time: "20:40", type: "internal" },
+                { route: "29-St: JEET", time: "21:00", type: "internal" },
+                { route: "29-St: Mess", time: "21:20", type: "internal" },
+                { route: "29-St: JEET", time: "21:40", type: "internal" },
+                { route: "29-St: Mess", time: "22:00", type: "internal" },
+                { route: "29-St: JEET", time: "22:20", type: "internal" },
+                { route: "29-St: Mess", time: "22:40", type: "internal" },
+                { route: "29-St: JEET", time: "23:00", type: "internal" },
+                { route: "29-St: Mess", time: "23:40", type: "internal" },
+
+                // EECO Shuttle Master List
+                { route: "EECO: JEET -> Mess", time: "07:50", type: "shuttle" },
+                { route: "EECO: Mess -> JEET", time: "08:00", type: "shuttle" },
+                { route: "EECO: JEET -> Mess", time: "10:00", type: "shuttle" },
+                { route: "EECO: Mess -> JEET", time: "10:30", type: "shuttle" },
+                { route: "EECO: JEET -> Mess", time: "11:00", type: "shuttle" },
+                { route: "EECO: Mess -> JEET", time: "11:30", type: "shuttle" },
+                { route: "EECO: JEET -> Mess", time: "12:30", type: "shuttle" },
+                { route: "EECO: Mess -> JEET", time: "14:00", type: "shuttle" },
+                { route: "EECO: JEET -> Mess", time: "14:30", type: "shuttle" },
+                { route: "EECO: Mess -> JEET", time: "15:00", type: "shuttle" },
+                { route: "EECO: Mess -> Mess(Loop)", time: "16:00", type: "shuttle" },
+                { route: "EECO: JEET -> JEET(Loop)", time: "16:30", type: "shuttle" },
+                { route: "EECO: Mess -> Mess(Loop)", time: "17:00", type: "shuttle" },
+                { route: "EECO: JEET -> JEET(Loop)", time: "17:30", type: "shuttle" },
+                { route: "EECO: Mess -> Mess(Loop)", time: "18:00", type: "shuttle" },
+                { route: "EECO: JEET -> JEET(Loop)", time: "18:30", type: "shuttle" },
+                { route: "EECO: Mess -> Mess(Loop)", time: "19:00", type: "shuttle" },
+                { route: "EECO: JEET -> JEET(Loop)", time: "19:30", type: "shuttle" }
+            ]
+        };
+
+        // STATE MANAGER
+        const UI_STATE = {
+            openModal: function(id) {
+                document.getElementById(id).classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            },
+            closeModals: function() {
+                document.querySelectorAll('.modal-overlay').forEach(el => el.classList.remove('active'));
+                document.body.style.overflow = 'auto';
+            },
+            formatTime: function(timeStr) {
+                let [h, m] = timeStr.split(':');
+                let ampm = h >= 12 ? 'PM' : 'AM';
+                return `${h % 12 || 12}:${m} ${ampm}`;
+            }
+        };
+
+        // RENDER ENGINE
+        function RenderSystem() {
+            const now = new Date();
+            
+            // Render Clock
+            document.getElementById('sys-time').innerText = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
+            document.getElementById('sys-date').innerText = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+            // Render Nutrition
+            let h = now.getHours();
+            let today = DATABASE.menus[now.getDay()];
+            let type = "CALCULATING";
+            let content = "";
+
+            if (h < 10) { type = "BREAKFAST"; content = today.breakfast; }
+            else if (h < 15) { type = "LUNCH"; content = today.lunch; }
+            else if (h < 18) { type = "SNACKS"; content = today.snacks; }
+            else if (h < 22) { type = "DINNER"; content = today.dinner; }
+            else { type = "TOMORROW MORNING"; content = DATABASE.menus[(now.getDay() + 1) % 7].breakfast; }
+
+            document.getElementById('meal-type').innerText = `CURRENT: ${type}`;
+            document.getElementById('meal-items').innerText = content;
+
+            // Render Live Radar (Next 4 Buses)
+            let currMins = (h * 60) + now.getMinutes();
+            let upcoming = DATABASE.buses.filter(b => {
+                let [bh, bm] = b.time.split(':');
+                return ((parseInt(bh) * 60) + parseInt(bm)) >= currMins;
+            }).slice(0, 4);
+
+            let radarHTML = upcoming.map(b => `
+                <div class="flex justify-between items-center bg-black/40 p-3 rounded-lg border border-white/5">
+                    <div class="flex items-center gap-3">
+                        <i class="fas ${b.type === 'internal' ? 'fa-shuttle-van text-green-400' : (b.type === 'shuttle' ? 'fa-car text-purple-400' : 'fa-bus-alt text-cyan-400')}"></i>
+                        <span class="text-sm font-semibold text-gray-200 tracking-wide">${b.route}</span>
+                    </div>
+                    <span class="font-code text-cyan-300 bg-cyan-900/20 px-2 py-1 rounded text-sm border border-cyan-500/20">${UI_STATE.formatTime(b.time)}</span>
+                </div>
+            `).join('');
+            document.getElementById('transit-radar').innerHTML = radarHTML || '<div class="text-gray-500 font-code text-sm">SYS_MSG: TRANSIT OPERATIONS CONCLUDED FOR TODAY</div>';
+        }
+
+        // INITIALIZE FULL DATABASE VIEWS
+        function BuildMasterDatabases() {
+            // Build the giant bus modal content
+            let busHtml = `<div class="grid grid-cols-1 md:grid-cols-3 gap-6">`;
+            
+            // Group logic for visual separation in modal
+            const types = [
+                { id: 'outbound', title: '56-Seater Routes', color: 'text-cyan-400' },
+                { id: 'internal', title: '29-Seater Routes', color: 'text-green-400' },
+                { id: 'shuttle', title: 'EECO Shuttle Routes', color: 'text-purple-400' }
+            ];
+
+            types.forEach(t => {
+                busHtml += `<div class="bg-black/30 p-4 rounded-xl border border-white/5"><h3 class="${t.color} font-bold mb-4 border-b border-white/10 pb-2">${t.title}</h3><ul class="space-y-2">`;
+                DATABASE.buses.filter(b => b.type === t.id || (t.id === 'outbound' && b.type === 'inbound')).forEach(b => {
+                    busHtml += `<li class="flex justify-between border-b border-white/5 pb-1"><span class="text-gray-400">${b.route}</span><span class="text-white">${UI_STATE.formatTime(b.time)}</span></li>`;
+                });
+                busHtml += `</ul></div>`;
+            });
+            busHtml += `</div>`;
+            document.getElementById('full-bus-schedule-container').innerHTML = busHtml;
+        }
+
+        // BOOT SEQUENCE
+        window.onload = () => {
+            BuildMasterDatabases();
+            RenderSystem();
+            setInterval(RenderSystem, 1000); // 1Hz Refresh Rate
+        };
+    </script>
 </body>
 </html>
