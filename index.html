@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Scholar Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Frontend Logic built by your Development Team
+        function switchTab(tabId) {
+            document.getElementById('live-dash').classList.add('hidden');
+            document.getElementById('full-schedule').classList.add('hidden');
+            document.getElementById(tabId).classList.remove('hidden');
+            
+            document.getElementById('tab-live').classList.remove('border-blue-500', 'text-blue-600');
+            document.getElementById('tab-full').classList.remove('border-blue-500', 'text-blue-600');
+            
+            if(tabId === 'live-dash') {
+                document.getElementById('tab-live').classList.add('border-blue-500', 'text-blue-600');
+            } else {
+                document.getElementById('tab-full').classList.add('border-blue-500', 'text-blue-600');
+            }
+        }
+
+        function updateLiveClock() {
+            const now = new Date();
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            document.getElementById('current-time-display').innerText = days[now.getDay()] + ", " + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        }
+        setInterval(updateLiveClock, 1000);
+        
+        window.onload = function() {
+            updateLiveClock();
+            switchTab('live-dash'); // Default view
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans pb-10">
+    
+    <nav class="bg-blue-900 text-white p-4 shadow-md sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold tracking-wide">The Scholar Portal</h1>
+            <div class="text-sm bg-blue-800 px-3 py-1 rounded hidden md:block">
+                📍 IIT Gandhinagar | Housing Block 32
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto p-4 mt-4">
+        <div class="flex border-b mb-6">
+            <button id="tab-live" onclick="switchTab('live-dash')" class="py-2 px-4 border-b-2 font-semibold text-blue-600 border-blue-500 hover:bg-gray-100 transition">Live Dashboard</button>
+            <button id="tab-full" onclick="switchTab('full-schedule')" class="py-2 px-4 border-b-2 font-semibold text-gray-500 border-transparent hover:bg-gray-100 transition">Full Schedules & Menus</button>
+        </div>
+
+        <div id="live-dash" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 md:col-span-2 flex justify-between items-center bg-gradient-to-r from-blue-50 to-white">
+                <div>
+                    <h2 class="text-lg text-gray-600">Current Status</h2>
+                    <p id="current-time-display" class="text-3xl font-bold text-blue-900">Loading time...</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-sm text-gray-500">PhD Started: July 17, 2024</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                <h2 class="text-xl font-bold mb-4 border-b pb-2 text-gray-700 flex justify-between">
+                    <span>Upcoming Transit</span>
+                    <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Live</span>
+                </h2>
+                <ul class="space-y-3">
+                    <li class="flex justify-between items-center bg-blue-50 p-3 rounded border border-blue-100">
+                        <div>
+                            <span class="block font-bold text-gray-800">56-Seater (To Palaj)</span>
+                            <span class="text-xs text-gray-500">Via Rakshashakti Circle</span>
+                        </div>
+                        <span class="bg-blue-600 text-white font-bold text-sm px-3 py-1 rounded-full">07:00 AM</span>
+                    </li>
+                    <li class="flex justify-between items-center bg-gray-50 p-3 rounded border border-gray-100">
+                        <div>
+                            <span class="block font-bold text-gray-800">EECO Shuttle</span>
+                            <span class="text-xs text-gray-500">JEET to Mess</span>
+                        </div>
+                        <span class="bg-gray-200 text-gray-800 font-bold text-sm px-3 py-1 rounded-full">07:50 AM</span>
+                    </li>
+                    <li class="flex justify-between items-center bg-gray-50 p-3 rounded border border-gray-100">
+                        <div>
+                            <span class="block font-bold text-gray-800">29-Seater Bus</span>
+                            <span class="text-xs text-gray-500">JEET to Mess</span>
+                        </div>
+                        <span class="bg-gray-200 text-gray-800 font-bold text-sm px-3 py-1 rounded-full">08:20 AM</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                <h2 class="text-xl font-bold mb-4 border-b pb-2 text-gray-700 flex justify-between">
+                    <span>Next Meal: Sunday Breakfast</span>
+                    <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Live</span>
+                </h2>
+                <div class="p-4 bg-orange-50 rounded border border-orange-100">
+                    <ul class="list-disc pl-5 text-sm text-gray-700 space-y-2">
+                        <li><strong>Beverage:</strong> Tea, Coffee & Milk</li>
+                        <li><strong>Main:</strong> Poha or Sprouts</li>
+                        <li><strong>Sides:</strong> Bread Butter Jam, Chocos</li>
+                        <li><strong>Fruit:</strong> Banana or Orange</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="full-schedule" class="hidden space-y-6">
+            
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                <h2 class="text-xl font-bold mb-4 border-b pb-2 text-gray-700">Complete Evening Bus Schedule (To Palaj)</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="p-3 bg-gray-50 border rounded text-center">4:30 PM</div>
+                    <div class="p-3 bg-gray-50 border rounded text-center">5:45 PM</div>
+                    <div class="p-3 bg-gray-50 border rounded text-center">6:45 PM</div>
+                    <div class="p-3 bg-gray-50 border rounded text-center">7:45 PM</div>
+                    <div class="p-3 bg-gray-50 border rounded text-center font-bold text-blue-900">9:30 PM</div>
+                    <div class="p-3 bg-gray-50 border rounded text-center font-bold text-blue-900">10:30 PM</div>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                <h2 class="text-xl font-bold mb-4 border-b pb-2 text-gray-700">Lookahead: Monday's Menu</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="p-4 bg-orange-50 rounded border border-orange-100">
+                        <h3 class="font-bold text-orange-800 mb-2">Breakfast</h3>
+                        <p class="text-sm text-gray-700">Veg Cutlet, Green Chutney, Sprouts, Bread Butter Jam.</p>
+                    </div>
+                    <div class="p-4 bg-green-50 rounded border border-green-100">
+                        <h3 class="font-bold text-green-800 mb-2">Lunch</h3>
+                        <p class="text-sm text-gray-700">Tadka Dal, Maths Vegetable, Plain Rice, Multi Grain Chapati.</p>
+                    </div>
+                    <div class="p-4 bg-blue-50 rounded border border-blue-100">
+                        <h3 class="font-bold text-blue-800 mb-2">Dinner</h3>
+                        <p class="text-sm text-gray-700">Dal Panchratni, Malai Kofta, Pulao, Chapati, Gulab Jamun.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>
