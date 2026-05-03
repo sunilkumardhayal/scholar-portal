@@ -103,11 +103,12 @@
     <header id="header" class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 border-b border-gray-200">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#home" class="text-2xl font-bold text-gray-900">Sunil Kumar</a>
-            <nav id="desktop-nav" class="hidden md:flex space-x-8 items-center">
+            <nav id="desktop-nav" class="hidden md:flex space-x-6 items-center">
                 <a href="#about" class="nav-link text-gray-600 hover:text-indigo-600 transition duration-300">About</a>
                 <a href="#education" class="nav-link text-gray-600 hover:text-indigo-600 transition duration-300">Education</a>
                 <a href="#achievements" class="nav-link text-gray-600 hover:text-indigo-600 transition duration-300">Achievements</a>
                 <a href="#experience" class="nav-link text-gray-600 hover:text-indigo-600 transition duration-300">Experience</a>
+                <a href="#publications" class="nav-link text-gray-600 hover:text-indigo-600 transition duration-300">Publications</a>
                 <a href="#projects" class="nav-link text-gray-600 hover:text-indigo-600 transition duration-300">Projects</a>
                 <a href="#skills" class="nav-link text-gray-600 hover:text-indigo-600 transition duration-300">Skills</a>
                 <a href="Sunil_CV.pdf" target="_blank" class="nav-link text-gray-600 hover:text-indigo-600 transition duration-300">CV</a>
@@ -122,6 +123,7 @@
             <a href="#education" class="block py-2 text-gray-600 hover:text-indigo-600">Education</a>
             <a href="#achievements" class="block py-2 text-gray-600 hover:text-indigo-600">Achievements</a>
             <a href="#experience" class="block py-2 text-gray-600 hover:text-indigo-600">Experience</a>
+            <a href="#publications" class="block py-2 text-gray-600 hover:text-indigo-600">Publications</a>
             <a href="#projects" class="block py-2 text-gray-600 hover:text-indigo-600">Projects</a>
             <a href="#skills" class="block py-2 text-gray-600 hover:text-indigo-600">Skills</a>
             <a href="#contact" class="block mt-2 py-2 text-center bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">Contact Me</a>
@@ -384,6 +386,7 @@
                 <div class="flex flex-wrap gap-3">
                     <button type="button" class="citation-format-btn inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 transition hover:border-indigo-400 hover:text-indigo-700" data-format="apa">APA</button>
                     <button type="button" class="citation-format-btn inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 transition hover:border-indigo-400 hover:text-indigo-700" data-format="bibtex">BibTeX</button>
+                    <a href="https://doi.org/10.1007/s11269-025-04377-2" target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-700">View DOI</a>
                 </div>
                 <div id="citation-copy-panel" class="hidden mt-4 rounded-md border border-gray-200 bg-white p-4">
                     <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
@@ -393,9 +396,6 @@
                     <pre id="citation-output" class="whitespace-pre-wrap break-words text-sm text-gray-600"></pre>
                     <p id="citation-copy-status" class="mt-2 hidden text-sm text-emerald-700">Copied.</p>
                 </div>
-            </div>
-            <div class="flex flex-wrap gap-3 mt-5">
-                <a href="https://doi.org/10.1007/s11269-025-04377-2" target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-700">View DOI</a>
             </div>
         </div>
     </div>
@@ -424,9 +424,6 @@
                             <h3 class="text-xl font-semibold mb-2">Chichlik Pumped Storage Project CFD Analysis</h3>
                             <p class="text-gray-600 mb-2 flex-grow">Performed CFD-based hydraulic assessment of upper and lower reservoir intake conditions, comparing operating cases, velocity fields, free-surface response, pressure distribution, and anti-vortex beam performance.</p>
                             <div class="mt-auto pt-4">
-                                <p class="text-sm text-gray-500">Consultancy Project, 2025 - 2026</p>
-                                <p class="text-sm text-gray-500">Guided by: <a href="https://iitgn.ac.in/faculty/civil/fac-pranab" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline font-semibold">Prof. Pranab Kumar Mohapatra</a></p>
-                                <p class="text-sm text-gray-500 mb-4">Tools: FLOW-3D HYDRO, Civil 3D, CAD geometry preparation, and ParaView post-processing</p>
                                 <a href="chichlik-cfd.html" class="text-indigo-600 hover:underline font-semibold">Learn More &rarr;</a>
                             </div>
                         </div>
@@ -521,29 +518,7 @@
 
         <section id="skills" class="py-20 bg-gray-50">
             <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-bold text-center mb-12">Selected Technical Skills</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 max-w-6xl mx-auto mb-14">
-                    <div class="bg-white border border-gray-200 rounded-lg p-5 shadow-sm">
-                        <h3 class="font-semibold text-gray-900 mb-2">CFD & Hydraulics</h3>
-                        <p class="text-sm text-gray-600">FLOW-3D HYDRO, multiphase flow, intake hydraulics, pressure, velocity, and free-surface analysis.</p>
-                    </div>
-                    <div class="bg-white border border-gray-200 rounded-lg p-5 shadow-sm">
-                        <h3 class="font-semibold text-gray-900 mb-2">GIS & Remote Sensing</h3>
-                        <p class="text-sm text-gray-600">ArcGIS, QGIS, basin mapping, DEM analysis, susceptibility mapping, and spatial data synthesis.</p>
-                    </div>
-                    <div class="bg-white border border-gray-200 rounded-lg p-5 shadow-sm">
-                        <h3 class="font-semibold text-gray-900 mb-2">Programming & Data</h3>
-                        <p class="text-sm text-gray-600">Python, MATLAB, data cleaning, model result processing, plots, and reproducible analysis workflows.</p>
-                    </div>
-                    <div class="bg-white border border-gray-200 rounded-lg p-5 shadow-sm">
-                        <h3 class="font-semibold text-gray-900 mb-2">CAD & Design</h3>
-                        <p class="text-sm text-gray-600">AutoCAD, Civil 3D, geometry preparation, structural design tools, and engineering drawing review.</p>
-                    </div>
-                    <div class="bg-white border border-gray-200 rounded-lg p-5 shadow-sm">
-                        <h3 class="font-semibold text-gray-900 mb-2">Documentation</h3>
-                        <p class="text-sm text-gray-600">Technical reports, research manuscripts, presentations, LaTeX, Word, and publication-ready figures.</p>
-                    </div>
-                </div>
+                <h2 class="text-3xl font-bold text-center mb-12">Technical Skills</h2>
                 <div class="max-w-5xl mx-auto space-y-12">
                     <div>
                         <h3 class="text-2xl font-semibold text-center mb-6">Core Competencies</h3>
