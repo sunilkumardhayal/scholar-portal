@@ -109,7 +109,6 @@
                 <a href="#achievements" class="nav-link text-gray-600 hover:text-indigo-600 transition duration-300">Achievements</a>
                 <a href="#experience" class="nav-link text-gray-600 hover:text-indigo-600 transition duration-300">Experience</a>
                 <a href="#projects" class="nav-link text-gray-600 hover:text-indigo-600 transition duration-300">Projects</a>
-                <a href="#skills" class="nav-link text-gray-600 hover:text-indigo-600 transition duration-300">Skills</a>
                 <a href="Sunil_CV.pdf" target="_blank" class="nav-link text-gray-600 hover:text-indigo-600 transition duration-300">CV</a>
                 <a href="#contact" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition duration-300 shadow" aria-label="Go to contact section">Contact Me</a>
             </nav>
@@ -123,7 +122,6 @@
             <a href="#achievements" class="block py-2 text-gray-600 hover:text-indigo-600">Achievements</a>
             <a href="#experience" class="block py-2 text-gray-600 hover:text-indigo-600">Experience</a>
             <a href="#projects" class="block py-2 text-gray-600 hover:text-indigo-600">Projects</a>
-            <a href="#skills" class="block py-2 text-gray-600 hover:text-indigo-600">Skills</a>
             <a href="#contact" class="block mt-2 py-2 text-center bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">Contact Me</a>
         </div>
     </header>
@@ -138,7 +136,7 @@
             </div>
         </section>
 
-        <section class="py-8 bg-slate-900 text-white">
+        <section class="py-4 bg-slate-900 text-white">
             <div class="container mx-auto px-6">
                 <p class="text-center text-base md:text-lg text-slate-200 max-w-5xl mx-auto">
                     Working across CFD hydraulics, river basin planning, urban water systems, geospatial hazard assessment, and engineering consultancy for water infrastructure.
@@ -380,22 +378,18 @@
             <p class="text-gray-600 mt-3 text-sm break-words">
                 <strong>Cite as:</strong> Tripathi, I.M., Kumar, S., Modi, A. et al. Towards Water Sensitivity: A Critical Review of Urban Water Management Strategies. <em>Water Resour Manage</em> 40, 94 (2026). https://doi.org/10.1007/s11269-025-04377-2
             </p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
-                <div class="bg-white border border-gray-200 rounded-md p-4">
-                    <h4 class="text-sm font-semibold text-gray-900 mb-2">APA</h4>
-                    <p class="text-sm text-gray-600 break-words">Tripathi, I. M., Kumar, S., Modi, A., Bhat, A. M., Bhagat, C., Mohapatra, P. K., &amp; Kansal, M. L. (2026). Towards Water Sensitivity: A Critical Review of Urban Water Management Strategies. <em>Water Resources Management, 40</em>, 94. https://doi.org/10.1007/s11269-025-04377-2</p>
+            <div class="mt-5">
+                <div class="flex flex-wrap gap-3">
+                    <button type="button" class="citation-format-btn inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 transition hover:border-indigo-400 hover:text-indigo-700" data-format="apa">APA</button>
+                    <button type="button" class="citation-format-btn inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 transition hover:border-indigo-400 hover:text-indigo-700" data-format="bibtex">BibTeX</button>
                 </div>
-                <div class="bg-white border border-gray-200 rounded-md p-4">
-                    <h4 class="text-sm font-semibold text-gray-900 mb-2">BibTeX</h4>
-                    <pre class="text-xs text-gray-600 whitespace-pre-wrap break-words">@article{tripathi2026towards,
-  title={Towards Water Sensitivity: A Critical Review of Urban Water Management Strategies},
-  author={Tripathi, I. M. and Kumar, S. and Modi, A. and others},
-  journal={Water Resources Management},
-  volume={40},
-  pages={94},
-  year={2026},
-  doi={10.1007/s11269-025-04377-2}
-}</pre>
+                <div id="citation-copy-panel" class="hidden mt-4 rounded-md border border-gray-200 bg-white p-4">
+                    <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
+                        <h4 id="citation-format-title" class="text-sm font-semibold text-gray-900"></h4>
+                        <button type="button" id="copy-citation-btn" class="inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-700">Copy</button>
+                    </div>
+                    <pre id="citation-output" class="whitespace-pre-wrap break-words text-sm text-gray-600"></pre>
+                    <p id="citation-copy-status" class="mt-2 hidden text-sm text-emerald-700">Copied.</p>
                 </div>
             </div>
             <div class="flex flex-wrap gap-3 mt-5">
@@ -405,28 +399,6 @@
     </div>
 </section>
 
-        <section id="sponsored-projects" class="py-16 bg-gray-50">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-bold text-center mb-4">Consultancy & Sponsored Projects</h2>
-                <p class="text-center text-gray-600 max-w-3xl mx-auto mb-10">Selected funded and consultancy work connecting hydraulic modeling, GIS, and water-resource planning.</p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                    <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Chichlik Pumped Storage Project</h3>
-                        <p class="text-sm text-gray-600">CFD assessment of reservoir intake hydraulics, operating cases, and anti-vortex beam performance.</p>
-                    </div>
-                    <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">cNarmada</h3>
-                        <p class="text-sm text-gray-600">Integrated river basin planning support through GIS mapping, hydrological data analysis, and flood-hazard assessment.</p>
-                    </div>
-                    <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Water4Change</h3>
-                        <p class="text-sm text-gray-600">Urban water systems research across wastewater, stormwater, city data synthesis, and water-sensitive planning.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        
         <section id="projects" class="py-20 bg-white">
             <div class="container mx-auto px-6">
                 <h2 class="text-3xl font-bold text-center mb-12">My Research & Projects</h2>
@@ -538,167 +510,6 @@
                                 <p class="text-sm text-gray-500">Summer Internship</p>
                                 <p class="text-sm text-gray-500">Guided by: Mr. Nand Kishore</p>
                             </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        
-
-        <section id="skills" class="py-20 bg-gray-50">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-bold text-center mb-12">Selected Technical Skills</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 max-w-6xl mx-auto mb-14">
-                    <div class="bg-white border border-gray-200 rounded-lg p-5 shadow-sm">
-                        <h3 class="font-semibold text-gray-900 mb-2">CFD & Hydraulics</h3>
-                        <p class="text-sm text-gray-600">FLOW-3D HYDRO, multiphase flow, intake hydraulics, pressure, velocity, and free-surface analysis.</p>
-                    </div>
-                    <div class="bg-white border border-gray-200 rounded-lg p-5 shadow-sm">
-                        <h3 class="font-semibold text-gray-900 mb-2">GIS & Remote Sensing</h3>
-                        <p class="text-sm text-gray-600">ArcGIS, QGIS, basin mapping, DEM analysis, susceptibility mapping, and spatial data synthesis.</p>
-                    </div>
-                    <div class="bg-white border border-gray-200 rounded-lg p-5 shadow-sm">
-                        <h3 class="font-semibold text-gray-900 mb-2">Programming & Data</h3>
-                        <p class="text-sm text-gray-600">Python, MATLAB, data cleaning, model result processing, plots, and reproducible analysis workflows.</p>
-                    </div>
-                    <div class="bg-white border border-gray-200 rounded-lg p-5 shadow-sm">
-                        <h3 class="font-semibold text-gray-900 mb-2">CAD & Design</h3>
-                        <p class="text-sm text-gray-600">AutoCAD, Civil 3D, geometry preparation, structural design tools, and engineering drawing review.</p>
-                    </div>
-                    <div class="bg-white border border-gray-200 rounded-lg p-5 shadow-sm">
-                        <h3 class="font-semibold text-gray-900 mb-2">Documentation</h3>
-                        <p class="text-sm text-gray-600">Technical reports, research manuscripts, presentations, LaTeX, Word, and publication-ready figures.</p>
-                    </div>
-                </div>
-                <div class="max-w-5xl mx-auto space-y-12">
-                    
-                    <div>
-                        <h3 class="text-2xl font-semibold text-center mb-6">Core Competencies</h3>
-                        <div class="flex flex-wrap justify-center gap-8">
-                            <div class="flex flex-col items-center p-4 w-48 text-center rounded-lg hover:bg-gray-100 transition duration-300 fade-in-element">
-                                <svg class="w-12 h-12 mb-2 text-blue-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6s1-4 4-4 5 2 5 2-1-4-4-4-5 2-5 2z"/><path d="M3 12s1-4 4-4 5 2 5 2-1-4-4-4-5 2-5 2z"/><path d="M3 18s1-4 4-4 5 2 5 2-1-4-4-4-5 2-5 2z"/></svg>
-                                <span class="font-medium">Computational Fluid Dynamics (CFD)</span>
-                                <p class="text-xs text-gray-500 mt-1">Used to model multiphase flow in vortex drop shafts for my PhD research.</p>
-                            </div>
-                            <div class="flex flex-col items-center p-4 w-48 text-center rounded-lg hover:bg-gray-100 transition duration-300 fade-in-element">
-                                 <svg class="w-12 h-12 mb-2 text-cyan-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20M7 18.27a14.28 14.28 0 0 1 10 0M7 5.73a14.28 14.28 0 0 0 10 0"/></svg>
-                                <span class="font-medium">Hydraulic Modeling</span>
-                                <p class="text-xs text-gray-500 mt-1">Applied in river basin management and urban water system analysis.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h3 class="text-2xl font-semibold text-center mb-6">Software & Tools</h3>
-                        <div class="flex flex-wrap justify-center gap-8">
-                            <div class="flex flex-col items-center p-4 w-48 text-center rounded-lg hover:bg-gray-100 transition duration-300 fade-in-element">
-                                <a href="https://www.flow3d.com/" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center w-full h-full justify-center">
-                                    <svg class="w-12 h-12 mb-2 text-teal-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-                                    <span class="font-medium">FLOW-3D</span>
-                                </a>
-                            </div>
-                            <div class="flex flex-col items-center p-4 w-48 text-center rounded-lg hover:bg-gray-100 transition duration-300 fade-in-element">
-                                <a href="https://www.flow3d.com/products/flow-3d-hydro/" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center w-full h-full justify-center">
-                                    <svg class="w-12 h-12 mb-2 text-blue-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12M17 9l-5 3-5-3"/></svg>
-                                    <span class="font-medium">FLOW-3D HYDRO</span>
-                                </a>
-                            </div>
-                             <div class="flex flex-col items-center p-4 w-48 text-center rounded-lg hover:bg-gray-100 transition duration-300 fade-in-element">
-                                <a href="https://deepsoil.cee.illinois.edu/" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center w-full h-full justify-center">
-                                    <svg class="w-12 h-12 mb-2 text-amber-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20M2 6h20M2 18h20"/></svg>
-                                    <span class="font-medium">DEEPSOIL</span>
-                                </a>
-                            </div>
-                            <div class="flex flex-col items-center p-4 w-48 text-center rounded-lg hover:bg-gray-100 transition duration-300 fade-in-element">
-                                <a href="https://qgis.org/en/site/" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center w-full h-full justify-center">
-                                   <svg class="w-12 h-12 mb-2 text-lime-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                                    <span class="font-medium">QGIS</span>
-                                </a>
-                            </div>
-                            <div class="flex flex-col items-center p-4 w-48 text-center rounded-lg hover:bg-gray-100 transition duration-300 fade-in-element">
-                                <a href="https://www.esri.com/en-us/arcgis/about-arcgis" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center w-full h-full justify-center">
-                                    <svg class="w-12 h-12 mb-2 text-blue-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <line x1="2" y1="12" x2="22" y2="12"></line>
-                                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                                    </svg>
-                                    <span class="font-medium">ArcGIS</span>
-                                </a>
-                            </div>
-                            <div class="flex flex-col items-center p-4 w-48 text-center rounded-lg hover:bg-gray-100 transition duration-300 fade-in-element">
-                                <a href="https://www.hec.usace.army.mil/software/hec-ras/" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center w-full h-full justify-center">
-                                    <svg class="w-12 h-12 mb-2 text-sky-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6L22 6"/><path d="M4 12h16"/><path d="M6 18h12"/><path d="M2 12c0 4.418 4.477 8 10 8s10-3.582 10-8H2z"/></svg>
-                                    <span class="font-medium">HEC-RAS</span>
-                                </a>
-                            </div>
-                            <div class="flex flex-col items-center p-4 w-48 text-center rounded-lg hover:bg-gray-100 transition duration-300 fade-in-element">
-                                <a href="https://www.csiamerica.com/products/sap2000" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center w-full h-full justify-center">
-                                    <svg class="w-12 h-12 mb-2 text-red-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M12 2L2 22h20L12 2z"></path>
-                                        <circle cx="12" cy="15" r="3"></circle>
-                                    </svg>
-                                    <span class="font-medium">SAP2000</span>
-                                </a>
-                            </div>
-                            <div class="flex flex-col items-center p-4 w-48 text-center rounded-lg hover:bg-gray-100 transition duration-300 fade-in-element">
-                                <a href="https://www.csiamerica.com/products/etabs" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center w-full h-full justify-center">
-                                    <svg class="w-12 h-12 mb-2 text-indigo-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
-                                        <line x1="9" y1="2" x2="9" y2="22"></line>
-                                        <line x1="15" y1="2" x2="15" y2="22"></line>
-                                        <line x1="4" y1="12" x2="20" y2="12"></line>
-                                    </svg>
-                                    <span class="font-medium">ETABS</span>
-                                </a>
-                            </div>
-                            <div class="flex flex-col items-center p-4 w-48 text-center rounded-lg hover:bg-gray-100 transition duration-300 fade-in-element">
-                                <a href="https://www.autodesk.com/in/products/autocad/overview" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center w-full h-full justify-center">
-                                    <svg class="w-12 h-12 mb-2 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                                    <span class="font-medium">Autocad</span>
-                                </a>
-                            </div>
-                            <div class="flex flex-col items-center p-4 w-48 text-center rounded-lg hover:bg-gray-100 transition duration-300 fade-in-element">
-                                <a href="https://www.autodesk.com/in/products/civil-3d/overview" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center w-full h-full justify-center">
-                                    <svg class="w-12 h-12 mb-2 text-blue-800" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
-                                        <line x1="8" y1="2" x2="8" y2="18"></line>
-                                        <line x1="16" y1="6" x2="16" y2="22"></line>
-                                    </svg>
-                                    <span class="font-medium">AutoCAD Civil 3D</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h3 class="text-2xl font-semibold text-center mb-6">Programming & Data Analysis</h3>
-                        <div class="flex flex-wrap justify-center gap-8">
-                             <div class="flex flex-col items-center p-4 w-48 text-center rounded-lg hover:bg-gray-100 transition duration-300 fade-in-element">
-                                <a href="https://www.python.org/" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center w-full h-full justify-center">
-                                    <svg class="w-12 h-12 mb-2 text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"/></svg>
-                                    <span class="font-medium">Python</span>
-                                </a>
-                            </div>
-                            <div class="flex flex-col items-center p-4 w-48 text-center rounded-lg hover:bg-gray-100 transition duration-300 fade-in-element">
-                                <a href="https://www.mathworks.com/products/matlab.html" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center w-full h-full justify-center">
-                                    <svg class="w-12 h-12 mb-2 text-orange-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><path d="M7 12h2l2-4 2 8 2-4h2"/></svg>
-                                    <span class="font-medium">MATLAB</span>
-                                </a>
-                            </div>
-                            <div class="flex flex-col items-center p-4 w-48 text-center rounded-lg hover:bg-gray-100 transition duration-300 fade-in-element">
-                            <a href="https://www.latex-project.org/" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center w-full h-full justify-center">
-                                <svg class="w-12 h-12 mb-2 text-slate-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                    <polyline points="14 2 14 8 20 8"></polyline>
-                                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                                    <polyline points="10 9 9 9 8 9"></polyline>
-                                </svg>
-                                <span class="font-medium">LaTeX</span>
-                            </a>
-                        </div>
                         </div>
                     </div>
 
@@ -886,6 +697,59 @@
 
         // --- Dynamic Year for Footer ---
         document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // --- Citation Copy Controls ---
+        const citationFormats = {
+            apa: {
+                title: 'APA',
+                text: 'Tripathi, I. M., Kumar, S., Modi, A., Bhat, A. M., Bhagat, C., Mohapatra, P. K., & Kansal, M. L. (2026). Towards Water Sensitivity: A Critical Review of Urban Water Management Strategies. Water Resources Management, 40, 94. https://doi.org/10.1007/s11269-025-04377-2'
+            },
+            bibtex: {
+                title: 'BibTeX',
+                text: `@article{tripathi2026towards,
+  title={Towards Water Sensitivity: A Critical Review of Urban Water Management Strategies},
+  author={Tripathi, I. M. and Kumar, S. and Modi, A. and Bhat, A. M. and Bhagat, C. and Mohapatra, P. K. and Kansal, M. L.},
+  journal={Water Resources Management},
+  volume={40},
+  pages={94},
+  year={2026},
+  doi={10.1007/s11269-025-04377-2}
+}`
+            }
+        };
+        const citationPanel = document.getElementById('citation-copy-panel');
+        const citationTitle = document.getElementById('citation-format-title');
+        const citationOutput = document.getElementById('citation-output');
+        const citationCopyButton = document.getElementById('copy-citation-btn');
+        const citationCopyStatus = document.getElementById('citation-copy-status');
+
+        document.querySelectorAll('.citation-format-btn').forEach((button) => {
+            button.addEventListener('click', () => {
+                const selectedCitation = citationFormats[button.dataset.format];
+                citationTitle.textContent = selectedCitation.title;
+                citationOutput.textContent = selectedCitation.text;
+                citationPanel.classList.remove('hidden');
+                citationCopyStatus.classList.add('hidden');
+            });
+        });
+
+        citationCopyButton.addEventListener('click', async () => {
+            if (!citationOutput.textContent) return;
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(citationOutput.textContent);
+            } else {
+                const textarea = document.createElement('textarea');
+                textarea.value = citationOutput.textContent;
+                textarea.setAttribute('readonly', '');
+                textarea.style.position = 'absolute';
+                textarea.style.left = '-9999px';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+            }
+            citationCopyStatus.classList.remove('hidden');
+        });
 
         // --- Floating Buttons Visibility on Scroll ---
         const floatingActions = document.getElementById('floating-actions');
